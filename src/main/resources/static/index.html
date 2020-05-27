@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <title>试卷发送</title>
+    <script src="/jquery.js"></script>
+    <script>
+        $(function () {
+            $("#send").click(function () {
+                let paperfiles = $("#papers")[0].files;
+                if(paperfiles == undefined || paperfiles.length == 0){
+                    alert("请选择试卷pdf");
+                    return;
+                }
+                // let papers = [];
+                // for (const paperfile of paperfiles) {
+                //     papers.push(paperfile);
+                // }
+                // console.log(papers);
+                let excel = $("#excel")[0].files[0] == undefined ? null : $("#excel")[0].files[0];
+                // if(papers==null || papers == undefined){
+                //     alert("试卷pdf文件未选择")
+                //     return;
+                // }
+                if(excel == null || excel == undefined){
+                    alert("excel未选择")
+                    return;
+                }
+
+                let formData = new FormData();
+                for (const paperfile of paperfiles) {
+                    formData.append("papers",paperfile);
+                }
+                formData.append("excel",excel);
+                $.ajax({
+                    url:"/paperSendToEmail",
+                    type: 'post',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success:function (data) {
+                        if(data.code == 200){
+                            alert("试卷全部发送成功");
+                        }else{
+                            alert(data.msg);
+                        }
+                    }
+                })
+            })
+        })
+
+    </script>
+</head>
+<body>
+
+    多个试卷：<input id="papers" multiple="multiple" type="file"><br>
+    excel:<input id="excel" type="file"><br>
+    <button id="send">发送</button><br>
+
+    <a href="/试卷发送统计表.xlsx">模板下载</a>
+</body>
+</html>
