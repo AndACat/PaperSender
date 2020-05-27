@@ -6,4 +6,4 @@
  
  
 ##项目运行截图
-![运行截图](https://raw.githubusercontent.com/hongmaju/light7Local/master/img/productShow/20170518152848.png)
+![运行截图](https://github.com/AndACat/PaperSender/blob/master/src/main/resources/imgs/1.png?raw=true)
